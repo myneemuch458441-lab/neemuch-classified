@@ -89,7 +89,7 @@
         }
         .ad-item {
             border-bottom: 1px solid #eee;
-            padding: 12px 0;
+            padding: 15px 0;
         }
         .ad-item:last-child {
             border-bottom: none;
@@ -118,6 +118,21 @@
             font-size: 0.82rem;
             color: #0d6efd;
             font-weight: bold;
+            margin-bottom: 8px;
+        }
+        .ad-media {
+            margin-top: 10px;
+        }
+        .ad-media img {
+            max-width: 100%;
+            max-height: 250px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+        .ad-media video {
+            max-width: 100%;
+            max-height: 250px;
+            border-radius: 6px;
         }
         footer {
             text-align: center;
@@ -159,7 +174,11 @@
                 </div>
                 <div class="form-group">
                     <label for="description">विवरण (Details)</label>
-                    <textarea id="description" rows="4" placeholder="स्थान, किराया, सुविधा आदि लिखें" required></textarea>
+                    <textarea id="description" rows="3" placeholder="स्थान, किराया, सुविधा आदि लिखें" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="media">फोटो या वीडियो अपलोड करें (Optional)</label>
+                    <input type="file" id="media" accept="image/*,video/*">
                 </div>
                 <button type="submit" class="btn-submit">विज्ञापन पोस्ट करें</button>
             </form>
@@ -169,7 +188,6 @@
         <div class="card">
             <h2>हाल ही में पोस्ट किए गए विज्ञापन</h2>
             <div id="adsContainer">
-                <!-- Pre-populated Ads -->
                 <div class="ad-item">
                     <div class="ad-title">2 BHK स्वतंत्र मकान किराए के लिए</div>
                     <span class="ad-category">मकान किराए हेतु</span>
@@ -198,8 +216,19 @@
             const category = document.getElementById('category').value;
             const contact = document.getElementById('contact').value;
             const description = document.getElementById('description').value;
+            const mediaFile = document.getElementById('media').files[0];
 
             const adsContainer = document.getElementById('adsContainer');
+
+            let mediaHTML = '';
+            if (mediaFile) {
+                const fileURL = URL.createObjectURL(mediaFile);
+                if (mediaFile.type.startsWith('image/')) {
+                    mediaHTML = `<div class="ad-media"><img src="${fileURL}" alt="Ad Image"></div>`;
+                } else if (mediaFile.type.startsWith('video/')) {
+                    mediaHTML = `<div class="ad-media"><video controls src="${fileURL}"></video></div>`;
+                }
+            }
 
             const adHTML = `
                 <div class="ad-item">
@@ -207,6 +236,7 @@
                     <span class="ad-category">${category}</span>
                     <div class="ad-desc">${description}</div>
                     <div class="ad-contact">📞 संपर्क: ${contact}</div>
+                    ${mediaHTML}
                 </div>
             `;
 
