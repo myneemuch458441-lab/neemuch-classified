@@ -90,14 +90,28 @@
         .ad-item {
             border-bottom: 1px solid #eee;
             padding: 15px 0;
+            position: relative;
         }
         .ad-item:last-child {
             border-bottom: none;
+        }
+        .ad-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
         }
         .ad-title {
             font-size: 1.05rem;
             font-weight: bold;
             color: #212529;
+        }
+        .ad-time {
+            font-size: 0.75rem;
+            color: #777;
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 4px;
         }
         .ad-category {
             display: inline-block;
@@ -189,13 +203,19 @@
             <h2>हाल ही में पोस्ट किए गए विज्ञापन</h2>
             <div id="adsContainer">
                 <div class="ad-item">
-                    <div class="ad-title">2 BHK स्वतंत्र मकान किराए के लिए</div>
+                    <div class="ad-header">
+                        <div class="ad-title">2 BHK स्वतंत्र मकान किराए के लिए</div>
+                        <span class="ad-time">📅 22 Oct 2026, 05:30 PM</span>
+                    </div>
                     <span class="ad-category">मकान किराए हेतु</span>
                     <div class="ad-desc">विकास नगर नीमच में 2 BHK मकान उपलब्ध है। बाइक पार्किंग, पानी की पूरी सुविधा।</div>
                     <div class="ad-contact">📞 संपर्क: 9876543210</div>
                 </div>
                 <div class="ad-item">
-                    <div class="ad-title">मुख्य बाजार में दुकान किराए पर उपलब्ध</div>
+                    <div class="ad-header">
+                        <div class="ad-title">मुख्य बाजार में दुकान किराए पर उपलब्ध</div>
+                        <span class="ad-time">📅 22 Oct 2026, 04:15 PM</span>
+                    </div>
                     <span class="ad-category">दुकान / ऑफिस</span>
                     <div class="ad-desc">टेगोर मार्ग पर 10x15 फीट की प्राइम लोकेशन शॉप। कमर्शियल उपयोग हेतु।</div>
                     <div class="ad-contact">📞 संपर्क: 9123456789</div>
@@ -218,6 +238,12 @@
             const description = document.getElementById('description').value;
             const mediaFile = document.getElementById('media').files[0];
 
+            // Get current Date & Time
+            const now = new Date();
+            const formattedDate = now.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+            const formattedTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+            const postTimeStamp = `📅 ${formattedDate}, ${formattedTime}`;
+
             const adsContainer = document.getElementById('adsContainer');
 
             let mediaHTML = '';
@@ -232,7 +258,10 @@
 
             const adHTML = `
                 <div class="ad-item">
-                    <div class="ad-title">${title}</div>
+                    <div class="ad-header">
+                        <div class="ad-title">${title}</div>
+                        <span class="ad-time">${postTimeStamp}</span>
+                    </div>
                     <span class="ad-category">${category}</span>
                     <div class="ad-desc">${description}</div>
                     <div class="ad-contact">📞 संपर्क: ${contact}</div>
