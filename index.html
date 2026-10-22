@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neemuch Rental Classified - नीमच क्लासिफाइड</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f4f6f9;
+            color: #333;
+        }
+        header {
+            background-color: #0d6efd;
+            color: white;
+            padding: 1rem 2rem;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            margin-bottom: 0.3rem;
+            font-size: 1.8rem;
+        }
+        header p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 0 15px;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 20px;
+        }
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .card h2 {
+            font-size: 1.2rem;
+            color: #0d6efd;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #eef2f7;
+            padding-bottom: 8px;
+        }
+        .form-group {
+            margin-bottom: 12px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            font-size: 0.88rem;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+        .btn-submit {
+            background-color: #198754;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            font-size: 0.95rem;
+            transition: background 0.2s;
+        }
+        .btn-submit:hover {
+            background-color: #146c43;
+        }
+        .ad-item {
+            border-bottom: 1px solid #eee;
+            padding: 12px 0;
+        }
+        .ad-item:last-child {
+            border-bottom: none;
+        }
+        .ad-title {
+            font-size: 1.05rem;
+            font-weight: bold;
+            color: #212529;
+        }
+        .ad-category {
+            display: inline-block;
+            background: #e7f1ff;
+            color: #0d6efd;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin: 4px 0;
+            font-weight: 600;
+        }
+        .ad-desc {
+            font-size: 0.88rem;
+            color: #555;
+            margin: 5px 0;
+        }
+        .ad-contact {
+            font-size: 0.82rem;
+            color: #0d6efd;
+            font-weight: bold;
+        }
+        footer {
+            text-align: center;
+            padding: 15px;
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>नीमच क्लासिफाइड (Neemuch Classified)</h1>
+        <p>मकान, दुकान, प्रॉपर्टी किराए एवं खरीद-बिक्री हेतु फ्री विज्ञापन पोस्ट करें</p>
+    </header>
+
+    <div class="container">
+        <!-- Post Ad Form -->
+        <div class="card">
+            <h2>नया विज्ञापन पोस्ट करें</h2>
+            <form id="adForm">
+                <div class="form-group">
+                    <label for="title">विज्ञापन का शीर्षक (Title)</label>
+                    <input type="text" id="title" placeholder="जैसे: 2 BHK मकान किराए के लिए" required>
+                </div>
+                <div class="form-group">
+                    <label for="category">श्रेणी (Category)</label>
+                    <select id="category" required>
+                        <option value="मकान किराए हेतु">मकान किराए हेतु</option>
+                        <option value="दुकान / ऑफिस">दुकान / ऑफिस</option>
+                        <option value="प्रॉपर्टी बिक्री">प्रॉपर्टी बिक्री</option>
+                        <option value="अन्य सेवाएं">अन्य सेवाएं</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="contact">संपर्क नंबर (Mobile No.)</label>
+                    <input type="tel" id="contact" placeholder="अपना मोबाइल नंबर डालें" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">विवरण (Details)</label>
+                    <textarea id="description" rows="4" placeholder="स्थान, किराया, सुविधा आदि लिखें" required></textarea>
+                </div>
+                <button type="submit" class="btn-submit">विज्ञापन पोस्ट करें</button>
+            </form>
+        </div>
+
+        <!-- Ads Listing -->
+        <div class="card">
+            <h2>हाल ही में पोस्ट किए गए विज्ञापन</h2>
+            <div id="adsContainer">
+                <!-- Pre-populated Ads -->
+                <div class="ad-item">
+                    <div class="ad-title">2 BHK स्वतंत्र मकान किराए के लिए</div>
+                    <span class="ad-category">मकान किराए हेतु</span>
+                    <div class="ad-desc">विकास नगर नीमच में 2 BHK मकान उपलब्ध है। बाइक पार्किंग, पानी की पूरी सुविधा।</div>
+                    <div class="ad-contact">📞 संपर्क: 9876543210</div>
+                </div>
+                <div class="ad-item">
+                    <div class="ad-title">मुख्य बाजार में दुकान किराए पर उपलब्ध</div>
+                    <span class="ad-category">दुकान / ऑफिस</span>
+                    <div class="ad-desc">टेगोर मार्ग पर 10x15 फीट की प्राइम लोकेशन शॉप। कमर्शियल उपयोग हेतु।</div>
+                    <div class="ad-contact">📞 संपर्क: 9123456789</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; Neemuch Rental Classified | My Neemuch Portal
+    </footer>
+
+    <script>
+        document.getElementById('adForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const title = document.getElementById('title').value;
+            const category = document.getElementById('category').value;
+            const contact = document.getElementById('contact').value;
+            const description = document.getElementById('description').value;
+
+            const adsContainer = document.getElementById('adsContainer');
+
+            const adHTML = `
+                <div class="ad-item">
+                    <div class="ad-title">${title}</div>
+                    <span class="ad-category">${category}</span>
+                    <div class="ad-desc">${description}</div>
+                    <div class="ad-contact">📞 संपर्क: ${contact}</div>
+                </div>
+            `;
+
+            adsContainer.insertAdjacentHTML('afterbegin', adHTML);
+            document.getElementById('adForm').reset();
+            alert('आपका विज्ञापन सफलतापूर्वक पोस्ट हो गया है!');
+        });
+    </script>
+</body>
+</html>
