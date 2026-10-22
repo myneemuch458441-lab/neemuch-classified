@@ -137,16 +137,25 @@
         .ad-media {
             margin-top: 10px;
         }
-        .ad-media img {
+        .ad-media img, .ad-media video {
             max-width: 100%;
             max-height: 250px;
             border-radius: 6px;
             object-fit: cover;
         }
-        .ad-media video {
-            max-width: 100%;
-            max-height: 250px;
-            border-radius: 6px;
+        .btn-delete {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            font-size: 0.75rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 8px;
+            font-weight: bold;
+        }
+        .btn-delete:hover {
+            background-color: #bb2d3b;
         }
         footer {
             text-align: center;
@@ -210,6 +219,7 @@
                     <span class="ad-category">मकान किराए हेतु</span>
                     <div class="ad-desc">विकास नगर नीमच में 2 BHK मकान उपलब्ध है। बाइक पार्किंग, पानी की पूरी सुविधा।</div>
                     <div class="ad-contact">📞 संपर्क: 9876543210</div>
+                    <button class="btn-delete" onclick="deleteAd(this)">🗑️ डिलीट करें (Admin)</button>
                 </div>
                 <div class="ad-item">
                     <div class="ad-header">
@@ -219,6 +229,7 @@
                     <span class="ad-category">दुकान / ऑफिस</span>
                     <div class="ad-desc">टेगोर मार्ग पर 10x15 फीट की प्राइम लोकेशन शॉप। कमर्शियल उपयोग हेतु।</div>
                     <div class="ad-contact">📞 संपर्क: 9123456789</div>
+                    <button class="btn-delete" onclick="deleteAd(this)">🗑️ डिलीट करें (Admin)</button>
                 </div>
             </div>
         </div>
@@ -229,6 +240,8 @@
     </footer>
 
     <script>
+        const ADMIN_PIN = "3252"; // आपका नया एडमिन पासवर्ड
+
         document.getElementById('adForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -238,7 +251,6 @@
             const description = document.getElementById('description').value;
             const mediaFile = document.getElementById('media').files[0];
 
-            // Get current Date & Time
             const now = new Date();
             const formattedDate = now.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
             const formattedTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
@@ -266,6 +278,7 @@
                     <div class="ad-desc">${description}</div>
                     <div class="ad-contact">📞 संपर्क: ${contact}</div>
                     ${mediaHTML}
+                    <button class="btn-delete" onclick="deleteAd(this)">🗑️ डिलीट करें (Admin)</button>
                 </div>
             `;
 
@@ -273,6 +286,18 @@
             document.getElementById('adForm').reset();
             alert('आपका विज्ञापन सफलतापूर्वक पोस्ट हो गया है!');
         });
+
+        // डिलीट करने का फ़ंक्शन
+        function deleteAd(button) {
+            const userPin = prompt("विज्ञापन हटाने के लिए एडमिन PIN (पासवर्ड) डालें:");
+            if (userPin === ADMIN_PIN) {
+                const adItem = button.closest('.ad-item');
+                adItem.remove();
+                alert("विज्ञापन सफलतापूर्वक डिलीट कर दिया गया है!");
+            } else if (userPin !== null) {
+                alert("गलत PIN! केवल एडमिन ही विज्ञापन हटा सकता है।");
+            }
+        }
     </script>
 </body>
 </html>
