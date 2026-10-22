@@ -1,0 +1,6 @@
+{
+  "name": "KirayaSathi - Rent House & Flat",
+  "description": "मकान, फ्लैट और रूम किराए पर देने और खोजने का ऐप। Landlords can post rental ads with up to 20 photos and 5 videos, floor, rooms, rent, deposit, and contact info with Admin moderation.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
